@@ -1,0 +1,520 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>기계적성 검사 | Mechanical Aptitude Test</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Gaegu:wght@400;700&family=Noto+Sans+KR:wght@300;400;500;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg: #ffffff;
+    --surface: #ffffff;
+    --surface2: #f7f8fa;
+    --border: rgba(0,0,0,0.08);
+    --border2: rgba(0,0,0,0.14);
+    --text: #1a1d27;
+    --text2: #5a5f72;
+    --text3: #9ba0b0;
+    --accent: #3b6ef0;
+    --accent2: #1d4ed8;
+    --accent-bg: rgba(59,110,240,0.07);
+    --green: #16a34a;
+    --green-bg: rgba(22,163,74,0.07);
+    --red: #dc2626;
+    --red-bg: rgba(220,38,38,0.07);
+  }
+
+  body {
+    font-family: 'Noto Sans KR', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  /* ── 상단 공지 배너 ── */
+  .announce-wrap {
+    width: 100%;
+    background: #fffbf0;
+    border-bottom: 2px dashed #f0c060;
+    padding: 1.8rem 1.5rem 1.5rem;
+    text-align: center;
+  }
+  .announce-inner { max-width: 720px; margin: 0 auto; }
+  .announce-text {
+    font-family: 'Gaegu', cursive;
+    font-size: clamp(28px, 6.5vw, 46px);
+    font-weight: 700;
+    color: #2d2d2d;
+    line-height: 1.45;
+  }
+  .announce-text .hl {
+    color: #e06b2e;
+    position: relative;
+    display: inline-block;
+  }
+  .announce-text .hl::after {
+    content: '';
+    position: absolute;
+    bottom: 3px; left: 0; right: 0;
+    height: 4px;
+    background: #f9d97a;
+    border-radius: 2px;
+    z-index: -1;
+  }
+  .announce-sub {
+    font-family: 'Gaegu', cursive;
+    font-size: 17px;
+    color: #b08030;
+    margin-top: 6px;
+    opacity: 0.75;
+    letter-spacing: 0.04em;
+  }
+
+  /* ── Wrapper ── */
+  .wrapper {
+    width: 100%; max-width: 720px;
+    padding: 0 1.5rem 4rem;
+  }
+
+  /* ── Header ── */
+  header {
+    text-align: center;
+    padding-top: 2rem;
+    margin-bottom: 2rem;
+  }
+  .badge {
+    display: inline-block;
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.12em;
+    color: var(--accent);
+    background: var(--accent-bg);
+    border: 1px solid rgba(59,110,240,0.18);
+    border-radius: 99px;
+    padding: 4px 14px;
+    margin-bottom: 12px;
+  }
+  h1 {
+    font-size: clamp(22px, 5vw, 30px);
+    font-weight: 700;
+    color: var(--text);
+    letter-spacing: -0.02em;
+  }
+  h1 span { color: var(--accent); }
+  .subtitle { font-size: 13px; color: var(--text3); margin-top: 6px; }
+
+  /* ── Progress ── */
+  .progress-wrap { display: flex; align-items: center; gap: 14px; margin-bottom: 1.4rem; }
+  .progress-track { flex:1; height:4px; background:#e8eaf0; border-radius:99px; overflow:hidden; }
+  .progress-fill {
+    height:100%;
+    background: linear-gradient(90deg, var(--accent), #6b9fff);
+    border-radius:99px;
+    transition: width .5s cubic-bezier(.4,0,.2,1);
+  }
+  .progress-label { font-family:'DM Mono',monospace; font-size:12px; color:var(--text3); white-space:nowrap; }
+
+  /* ── Card ── */
+  .card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 1.75rem;
+    margin-bottom: 1rem;
+    box-shadow: 0 1px 6px rgba(0,0,0,0.06);
+    animation: fadeUp .3s cubic-bezier(.4,0,.2,1);
+  }
+  @keyframes fadeUp {
+    from { opacity:0; transform:translateY(10px); }
+    to   { opacity:1; transform:translateY(0); }
+  }
+
+  .type-tag {
+    display: inline-flex; align-items: center; gap:6px;
+    font-size: 11px; font-weight: 500; letter-spacing: 0.07em;
+    color: var(--accent); background: var(--accent-bg);
+    border: 1px solid rgba(59,110,240,0.15);
+    border-radius: 6px; padding: 3px 10px; margin-bottom: 12px;
+  }
+  .type-tag::before {
+    content:''; width:5px; height:5px; border-radius:50%; background:var(--accent);
+  }
+  .q-num { font-family:'DM Mono',monospace; font-size:11px; color:var(--text3); margin-bottom:5px; }
+  .q-text { font-size:15px; line-height:1.7; color:var(--text); margin-bottom:1.2rem; }
+
+  .svg-area {
+    background: var(--surface2); border: 1px solid var(--border);
+    border-radius: 12px; padding: 1.25rem;
+    display: flex; justify-content: center; margin-bottom: 1.4rem;
+  }
+
+  /* ── Options ── */
+  .options { display:grid; gap:8px; }
+  .option {
+    display: flex; align-items: center; gap: 12px;
+    background: var(--surface2); border: 1px solid var(--border);
+    border-radius: 10px; padding: 12px 16px; cursor: pointer;
+    font-size: 14px; color: var(--text);
+    font-family: 'Noto Sans KR', sans-serif;
+    text-align: left; width: 100%;
+    transition: border-color .15s, background .15s, transform .1s;
+  }
+  .option:hover:not(:disabled) { border-color:var(--border2); background:#f0f2f8; transform:translateX(2px); }
+  .option:disabled { cursor:default; }
+  .option.selected { border-color:var(--accent); background:var(--accent-bg); color:var(--accent2); }
+  .option.correct  { border-color:var(--green);  background:var(--green-bg);  color:var(--green); }
+  .option.wrong    { border-color:var(--red);    background:var(--red-bg);    color:var(--red); }
+
+  .opt-letter {
+    font-family:'DM Mono',monospace; font-size:11px; font-weight:500;
+    width:24px; height:24px; border-radius:6px;
+    background:#fff; border:1px solid var(--border2);
+    display:flex; align-items:center; justify-content:center; flex-shrink:0;
+  }
+  .option.selected .opt-letter { background:var(--accent-bg); border-color:var(--accent); color:var(--accent2); }
+  .option.correct  .opt-letter { background:var(--green-bg);  border-color:var(--green);  color:var(--green); }
+  .option.wrong    .opt-letter { background:var(--red-bg);    border-color:var(--red);    color:var(--red); }
+
+  /* ── Feedback ── */
+  .feedback {
+    margin-top:12px; border-radius:10px; padding:13px 16px;
+    font-size:13px; line-height:1.65; display:none;
+  }
+  .feedback.show { display:block; animation:fadeUp .2s ease; }
+  .feedback.correct { background:var(--green-bg); border:1px solid rgba(22,163,74,0.2); color:#166534; }
+  .feedback.wrong   { background:var(--red-bg);   border:1px solid rgba(220,38,38,0.2); color:#991b1b; }
+  .feedback strong  { display:block; margin-bottom:3px; font-size:14px; }
+
+  /* ── Nav ── */
+  .nav { display:flex; justify-content:flex-end; gap:10px; margin-top:1rem; }
+  .btn {
+    font-family:'Noto Sans KR',sans-serif; font-size:14px;
+    padding:10px 22px; border-radius:10px;
+    border:1px solid var(--border2); background:transparent;
+    color:var(--text2); cursor:pointer;
+    transition:background .15s, color .15s, transform .1s;
+  }
+  .btn:hover { background:var(--surface2); color:var(--text); }
+  .btn:active { transform:scale(0.97); }
+  .btn-primary { background:var(--accent); color:#fff; border-color:var(--accent); }
+  .btn-primary:hover { background:#2858d0; color:#fff; }
+  .btn-primary:disabled {
+    background:#e8eaf0; border-color:#e8eaf0; color:var(--text3);
+    cursor:not-allowed; transform:none;
+  }
+
+  /* ── Result ── */
+  .result-card {
+    background:var(--surface); border:1px solid var(--border);
+    border-radius:16px; padding:2.5rem 2rem; text-align:center;
+    box-shadow:0 1px 6px rgba(0,0,0,0.06); animation:fadeUp .3s ease;
+  }
+  .score-ring { position:relative; width:120px; height:120px; margin:0 auto 1.2rem; }
+  .score-ring svg { width:120px; height:120px; transform:rotate(-90deg); }
+  .score-ring-text {
+    position:absolute; inset:0;
+    display:flex; flex-direction:column; align-items:center; justify-content:center;
+  }
+  .score-big { font-size:30px; font-weight:700; color:var(--text); }
+  .score-denom { font-size:12px; color:var(--text3); font-family:'DM Mono',monospace; }
+  .grade-text { font-size:22px; font-weight:700; margin-bottom:4px; }
+  .grade-sub  { font-size:14px; color:var(--text2); }
+  .meta-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:10px; margin:1.5rem 0; }
+  .meta-cell { background:var(--surface2); border:1px solid var(--border); border-radius:10px; padding:14px 8px; }
+  .meta-val { font-size:22px; font-weight:700; color:var(--text); }
+  .meta-lbl { font-size:11px; color:var(--text3); margin-top:2px; }
+  .review-section { text-align:left; margin-top:1.5rem; }
+  .review-title { font-size:13px; font-weight:500; color:var(--text2); margin-bottom:10px; letter-spacing:0.04em; }
+  .review-item {
+    display:flex; align-items:center; gap:10px;
+    background:var(--surface2); border:1px solid var(--border);
+    border-radius:8px; padding:10px 14px; margin-bottom:6px; font-size:13px;
+  }
+  .ri-dot { width:8px; height:8px; border-radius:50%; flex-shrink:0; }
+  .ri-dot.ok { background:var(--green); }
+  .ri-dot.no { background:var(--red); }
+  .ri-type { color:var(--text2); flex:1; }
+  .ri-result { font-family:'DM Mono',monospace; font-size:11px; }
+  .ri-result.ok { color:var(--green); }
+  .ri-result.no { color:var(--red); }
+
+  @media (max-width:520px) {
+    .card { padding:1.25rem; }
+    .btn  { padding:10px 16px; }
+    .announce-text { font-size:26px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ── 상단 공지 ── -->
+<div class="announce-wrap">
+  <div class="announce-inner">
+    <div class="announce-text">산업심리학 듣는 <span class="hl">수정이들</span>,</div>
+    <div class="announce-text">도전해보세요! 🔧</div>
+    <div class="announce-sub">✏︎ Mechanical Aptitude Test</div>
+  </div>
+</div>
+
+<div class="wrapper">
+  <header>
+    <div class="badge">SELECTION TEST · 기계적성</div>
+    <h1>기계적성 <span>검사</span></h1>
+    <p class="subtitle">Mechanical Aptitude Test &nbsp;·&nbsp; 총 6문항</p>
+  </header>
+
+  <div class="progress-wrap">
+    <div class="progress-track">
+      <div class="progress-fill" id="prog" style="width:0%"></div>
+    </div>
+    <div class="progress-label" id="qnum">0 / 6</div>
+  </div>
+
+  <div id="main"></div>
+</div>
+
+<script>
+const Q = [
+  {
+    type: "도르래 원리",
+    text: "아래 도르래 장치에서 10kg의 물체를 들어 올리려면 줄을 당기는 힘은 몇 kg이 필요할까요?",
+    svg: `<svg width="220" height="190" viewBox="0 0 220 190">
+      <line x1="110" y1="0" x2="110" y2="22" stroke="#3b6ef0" stroke-width="2"/>
+      <circle cx="110" cy="50" r="28" fill="none" stroke="#9ba0b0" stroke-width="2"/>
+      <circle cx="110" cy="50" r="6" fill="#3b6ef0"/>
+      <line x1="82" y1="50" x2="60" y2="130" stroke="#9ba0b0" stroke-width="2"/>
+      <line x1="138" y1="50" x2="160" y2="130" stroke="#9ba0b0" stroke-width="2"/>
+      <rect x="75" y="130" width="70" height="40" rx="6" fill="#eff4ff" stroke="#3b6ef0" stroke-width="1.5"/>
+      <text x="110" y="155" text-anchor="middle" font-size="13" fill="#1d4ed8" font-family="sans-serif">10 kg</text>
+      <text x="50" y="148" text-anchor="middle" font-size="12" fill="#e06b2e" font-family="sans-serif">F = ?</text>
+      <path d="M54 128 L54 115 M54 115 L50 121 M54 115 L58 121" stroke="#e06b2e" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+      <text x="110" y="18" text-anchor="middle" font-size="10" fill="#9ba0b0" font-family="sans-serif">고정점</text>
+    </svg>`,
+    opts: ["10 kg", "5 kg", "20 kg", "2.5 kg"],
+    ans: 1,
+    exp: "이동 도르래 1개가 포함된 장치에서 줄이 2가닥으로 무게를 지지하므로, 필요한 힘은 절반인 <strong>5 kg</strong>입니다. 이동 도르래 수가 늘어날수록 필요 힘은 줄어듭니다."
+  },
+  {
+    type: "기어 회전",
+    text: "A 기어(24이)가 시계 방향으로 회전할 때, B 기어(12이)는 어느 방향으로, 몇 배 빠르게 회전합니까?",
+    svg: `<svg width="250" height="170" viewBox="0 0 250 170">
+      <circle cx="82" cy="85" r="50" fill="none" stroke="#d8dcec" stroke-width="1" stroke-dasharray="4 3"/>
+      <circle cx="82" cy="85" r="42" fill="#eff4ff" stroke="#3b6ef0" stroke-width="2"/>
+      <circle cx="82" cy="85" r="9" fill="#3b6ef0"/>
+      <text x="82" y="90" text-anchor="middle" font-size="13" fill="#1d4ed8" font-weight="500" font-family="sans-serif">A</text>
+      <text x="82" y="57" text-anchor="middle" font-size="11" fill="#3b6ef0" font-family="sans-serif">24이</text>
+      <path d="M96 76 Q114 84 98 93" stroke="#3b6ef0" stroke-width="1.5" fill="none" marker-end="url(#a1)"/>
+      <circle cx="172" cy="85" r="30" fill="#f0faf4" stroke="#16a34a" stroke-width="2"/>
+      <circle cx="172" cy="85" r="9" fill="#16a34a"/>
+      <text x="172" y="90" text-anchor="middle" font-size="13" fill="#166534" font-weight="500" font-family="sans-serif">B</text>
+      <text x="172" y="60" text-anchor="middle" font-size="11" fill="#16a34a" font-family="sans-serif">12이</text>
+      <line x1="124" y1="85" x2="142" y2="85" stroke="#9ba0b0" stroke-width="1.5"/>
+      <defs>
+        <marker id="a1" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse">
+          <path d="M2 1L8 5L2 9" fill="none" stroke="#3b6ef0" stroke-width="1.5" stroke-linecap="round"/>
+        </marker>
+      </defs>
+    </svg>`,
+    opts: ["시계 방향, 2배 빠름", "반시계 방향, 2배 빠름", "시계 방향, 같은 속도", "반시계 방향, 같은 속도"],
+    ans: 1,
+    exp: "맞물린 기어는 <strong>반대 방향</strong>으로 회전합니다. 속도비 = A이 수 ÷ B이 수 = 24 ÷ 12 = <strong>2배</strong>. 따라서 B 기어는 반시계 방향으로 2배 빠르게 회전합니다."
+  },
+  {
+    type: "지레 원리",
+    text: "받침점 기준 왼쪽 2m 지점에 30kg 물체가 있습니다. 오른쪽 몇 m 지점에 10kg의 힘을 가해야 균형이 됩니까?",
+    svg: `<svg width="270" height="145" viewBox="0 0 270 145">
+      <rect x="10" y="78" width="250" height="8" rx="3" fill="#d8dcec"/>
+      <polygon points="135,86 122,118 148,118" fill="#3b6ef0" opacity="0.6"/>
+      <rect x="120" y="118" width="30" height="8" rx="2" fill="#e8eaf0" stroke="#9ba0b0" stroke-width="1"/>
+      <rect x="18" y="56" width="52" height="24" rx="6" fill="#eff4ff" stroke="#3b6ef0" stroke-width="1.5"/>
+      <text x="44" y="72" text-anchor="middle" font-size="12" fill="#1d4ed8" font-family="sans-serif">30 kg</text>
+      <line x1="44" y1="80" x2="44" y2="56" stroke="#3b6ef0" stroke-width="1.2"/>
+      <line x1="44" y1="82" x2="135" y2="82" stroke="#3b6ef0" stroke-dasharray="3 3" stroke-width="0.8" opacity="0.5"/>
+      <text x="90" y="97" text-anchor="middle" font-size="11" fill="#3b6ef0" font-family="sans-serif">← 2 m →</text>
+      <line x1="135" y1="82" x2="225" y2="82" stroke="#16a34a" stroke-dasharray="3 3" stroke-width="0.8" opacity="0.5"/>
+      <text x="180" y="97" text-anchor="middle" font-size="11" fill="#16a34a" font-family="sans-serif">← ? m →</text>
+      <text x="225" y="65" text-anchor="middle" font-size="12" fill="#16a34a" font-family="sans-serif">10 kg (F)</text>
+      <line x1="225" y1="68" x2="225" y2="80" stroke="#16a34a" stroke-width="1.5" stroke-linecap="round"/>
+    </svg>`,
+    opts: ["3 m", "6 m", "4 m", "8 m"],
+    ans: 1,
+    exp: "지레 원리: 힘 × 거리가 같아야 균형 → 30 × 2 = 10 × ?<br>? = 60 ÷ 10 = <strong>6 m</strong>. 받침점에서 오른쪽 6m 지점에 10kg 힘을 가하면 균형을 이룹니다."
+  },
+  {
+    type: "유체 압력 (파스칼 원리)",
+    text: "왼쪽 피스톤(면적 20cm²)에 100N을 가하면, 오른쪽 피스톤(면적 60cm²)에 발생하는 힘은?",
+    svg: `<svg width="270" height="150" viewBox="0 0 270 150">
+      <rect x="10" y="35" width="70" height="80" rx="8" fill="none" stroke="#9ba0b0" stroke-width="1.5"/>
+      <rect x="15" y="72" width="60" height="38" rx="3" fill="#dbeafe" opacity="0.9"/>
+      <rect x="180" y="35" width="70" height="80" rx="8" fill="none" stroke="#9ba0b0" stroke-width="1.5"/>
+      <rect x="185" y="72" width="60" height="38" rx="3" fill="#dbeafe" opacity="0.9"/>
+      <rect x="80" y="95" width="110" height="18" rx="3" fill="#dbeafe" opacity="0.9"/>
+      <line x1="80" y1="95" x2="190" y2="95" stroke="#9ba0b0" stroke-width="1"/>
+      <line x1="80" y1="113" x2="190" y2="113" stroke="#9ba0b0" stroke-width="1"/>
+      <rect x="18" y="26" width="64" height="12" rx="5" fill="#e8eaf0" stroke="#3b6ef0" stroke-width="1"/>
+      <line x1="50" y1="14" x2="50" y2="26" stroke="#3b6ef0" stroke-width="2" stroke-linecap="round"/>
+      <text x="50" y="12" text-anchor="middle" font-size="11" fill="#e06b2e" font-family="sans-serif">100 N ↓</text>
+      <rect x="188" y="26" width="64" height="12" rx="5" fill="#e8eaf0" stroke="#16a34a" stroke-width="1"/>
+      <line x1="220" y1="14" x2="220" y2="26" stroke="#16a34a" stroke-width="2" stroke-linecap="round"/>
+      <text x="220" y="12" text-anchor="middle" font-size="11" fill="#16a34a" font-family="sans-serif">? N ↑</text>
+      <text x="45" y="138" text-anchor="middle" font-size="11" fill="#3b6ef0" font-family="sans-serif">20 cm²</text>
+      <text x="220" y="138" text-anchor="middle" font-size="11" fill="#16a34a" font-family="sans-serif">60 cm²</text>
+    </svg>`,
+    opts: ["100 N", "200 N", "300 N", "33 N"],
+    ans: 2,
+    exp: "파스칼 원리: 압력 P = F/A = 100 ÷ 20 = 5 N/cm²<br>오른쪽 힘 = P × A = 5 × 60 = <strong>300 N</strong>. 면적이 클수록 더 큰 힘이 발생합니다 (유압 기기의 원리)."
+  },
+  {
+    type: "속도 · 가속도",
+    text: "정지 상태에서 출발한 자동차가 4초 만에 시속 72 km에 도달했습니다. 이 자동차의 가속도는?",
+    svg: `<svg width="260" height="140" viewBox="0 0 260 140">
+      <line x1="30" y1="110" x2="245" y2="110" stroke="#9ba0b0" stroke-width="1.5"/>
+      <polygon points="245,110 237,106 237,114" fill="#9ba0b0"/>
+      <text x="250" y="114" font-size="11" fill="#9ba0b0" font-family="sans-serif">t</text>
+      <line x1="30" y1="110" x2="30" y2="20" stroke="#9ba0b0" stroke-width="1.5"/>
+      <polygon points="30,20 26,28 34,28" fill="#9ba0b0"/>
+      <text x="30" y="16" text-anchor="middle" font-size="11" fill="#9ba0b0" font-family="sans-serif">v</text>
+      <line x1="30" y1="110" x2="210" y2="30" stroke="#3b6ef0" stroke-width="2.5" stroke-linecap="round"/>
+      <circle cx="30" cy="110" r="5" fill="#3b6ef0"/>
+      <circle cx="210" cy="30" r="5" fill="#dc2626"/>
+      <line x1="30" y1="30" x2="210" y2="30" stroke="#dc2626" stroke-dasharray="4 3" stroke-width="1"/>
+      <line x1="210" y1="30" x2="210" y2="110" stroke="#dc2626" stroke-dasharray="4 3" stroke-width="1"/>
+      <text x="26" y="114" text-anchor="end" font-size="11" fill="#9ba0b0" font-family="sans-serif">0</text>
+      <text x="210" y="124" text-anchor="middle" font-size="11" fill="#5a5f72" font-family="sans-serif">4초</text>
+      <text x="10" y="34" text-anchor="end" font-size="11" fill="#dc2626" font-family="sans-serif">72</text>
+      <text x="14" y="44" text-anchor="end" font-size="9" fill="#dc2626" font-family="sans-serif">km/h</text>
+      <text x="118" y="82" text-anchor="middle" font-size="12" fill="#3b6ef0" font-family="sans-serif">a = ?</text>
+    </svg>`,
+    opts: ["5 m/s²", "18 m/s²", "4.5 m/s²", "10 m/s²"],
+    ans: 0,
+    exp: "72 km/h → 20 m/s로 변환 후<br>a = Δv ÷ Δt = 20 ÷ 4 = <strong>5 m/s²</strong>. v-t 그래프에서 직선의 기울기가 가속도를 나타냅니다."
+  },
+  {
+    type: "나사 · 기계요소",
+    text: "피치(나사산 간격)가 2 mm인 나사를 1바퀴(360°) 돌리면 나사는 축 방향으로 얼마나 이동합니까?",
+    svg: `<svg width="250" height="150" viewBox="0 0 250 150">
+      <rect x="30" y="55" width="190" height="50" rx="8" fill="#eff4ff" stroke="#3b6ef0" stroke-width="2"/>
+      <g stroke="#3b6ef0" stroke-width="1.2" fill="none" opacity="0.4">
+        <line x1="51" y1="55" x2="51" y2="105"/>
+        <line x1="68" y1="55" x2="68" y2="105"/>
+        <line x1="85" y1="55" x2="85" y2="105"/>
+        <line x1="102" y1="55" x2="102" y2="105"/>
+        <line x1="119" y1="55" x2="119" y2="105"/>
+        <line x1="136" y1="55" x2="136" y2="105"/>
+        <line x1="153" y1="55" x2="153" y2="105"/>
+        <line x1="170" y1="55" x2="170" y2="105"/>
+        <line x1="187" y1="55" x2="187" y2="105"/>
+        <line x1="204" y1="55" x2="204" y2="105"/>
+      </g>
+      <path d="M34 61 Q42 50 51 61 Q59 72 68 61 Q76 50 85 61 Q93 72 102 61 Q110 50 119 61 Q127 72 136 61 Q144 50 153 61 Q161 72 170 61 Q178 50 187 61 Q195 72 204 61 Q212 50 216 61" stroke="#3b6ef0" stroke-width="2" fill="none"/>
+      <path d="M34 99 Q42 88 51 99 Q59 110 68 99 Q76 88 85 99 Q93 110 102 99 Q110 88 119 99 Q127 110 136 99 Q144 88 153 99 Q161 110 170 99 Q178 88 187 99 Q195 110 204 99 Q212 88 216 99" stroke="#3b6ef0" stroke-width="2" fill="none"/>
+      <line x1="68" y1="120" x2="85" y2="120" stroke="#dc2626" stroke-width="1.5"/>
+      <line x1="68" y1="117" x2="68" y2="123" stroke="#dc2626" stroke-width="1.5"/>
+      <line x1="85" y1="117" x2="85" y2="123" stroke="#dc2626" stroke-width="1.5"/>
+      <text x="76" y="136" text-anchor="middle" font-size="11" fill="#dc2626" font-family="sans-serif">피치 2mm</text>
+      <path d="M155 43 Q185 30 218 46" stroke="#16a34a" stroke-width="1.5" fill="none" marker-end="url(#a2)"/>
+      <text x="183" y="26" text-anchor="middle" font-size="11" fill="#16a34a" font-family="sans-serif">1회전 → ? mm</text>
+      <defs>
+        <marker id="a2" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse">
+          <path d="M2 1L8 5L2 9" fill="none" stroke="#16a34a" stroke-width="1.5" stroke-linecap="round"/>
+        </marker>
+      </defs>
+    </svg>`,
+    opts: ["1 mm", "2 mm", "4 mm", "0.5 mm"],
+    ans: 1,
+    exp: "나사의 이동 거리 = 피치 × 회전수 = 2 × 1 = <strong>2 mm</strong>. 볼스크류, 리드스크류 등 정밀 이송 장치에서 피치는 위치 정밀도를 결정하는 핵심 요소입니다."
+  }
+];
+
+let cur=0, answers=Array(Q.length).fill(null), revealed=Array(Q.length).fill(false);
+const pct=(n,d)=>Math.round(n/d*100);
+
+function render(){
+  if(cur>=Q.length){showResult();return;}
+  const q=Q[cur],sel=answers[cur],rev=revealed[cur];
+  document.getElementById('qnum').textContent=`${cur+1} / ${Q.length}`;
+  document.getElementById('prog').style.width=`${pct(cur+1,Q.length)}%`;
+  const opts=q.opts.map((o,i)=>{
+    let cls='option';
+    if(rev){if(i===q.ans)cls+=' correct';else if(i===sel)cls+=' wrong';}
+    else if(i===sel)cls+=' selected';
+    const L=String.fromCharCode(65+i);
+    return `<button class="${cls}" onclick="pick(${i})" ${rev?'disabled':''}><span class="opt-letter">${L}</span>${o}</button>`;
+  }).join('');
+  const fCls=rev?(sel===q.ans?'correct':'wrong'):'';
+  const fIcon=rev?(sel===q.ans?'✓ 정답!':'✗ 오답'):'';
+  document.getElementById('main').innerHTML=`
+    <div class="card">
+      <div class="type-tag">${q.type}</div>
+      <div class="q-num">Q${cur+1} of ${Q.length}</div>
+      <div class="q-text">${q.text}</div>
+      <div class="svg-area">${q.svg}</div>
+      <div class="options">${opts}</div>
+      <div class="feedback ${fCls} ${rev?'show':''}"><strong>${fIcon}</strong>${q.exp}</div>
+    </div>
+    <div class="nav">
+      ${cur>0?'<button class="btn" onclick="go(-1)">← 이전</button>':''}
+      ${rev
+        ?`<button class="btn btn-primary" onclick="go(1)">${cur<Q.length-1?'다음 문제 →':'결과 보기 →'}</button>`
+        :`<button class="btn btn-primary" onclick="check()" ${sel===null?'disabled':''}>정답 확인</button>`
+      }
+    </div>`;
+}
+function pick(i){if(revealed[cur])return;answers[cur]=i;render();}
+function check(){if(answers[cur]===null)return;revealed[cur]=true;render();}
+function go(d){cur=Math.min(Math.max(cur+d,0),Q.length);render();}
+
+function showResult(){
+  const ok=answers.filter((a,i)=>a===Q[i].ans).length;
+  const p=pct(ok,Q.length);
+  const grade=p>=90?['우수','#16a34a']:p>=70?['보통','#d97706']:['개선 필요','#dc2626'];
+  const r=46,circ=2*Math.PI*r,dash=(p/100)*circ;
+  document.getElementById('qnum').textContent='결과';
+  document.getElementById('prog').style.width='100%';
+  const review=Q.map((q,i)=>{
+    const isOk=answers[i]===q.ans;
+    return `<div class="review-item">
+      <span class="ri-dot ${isOk?'ok':'no'}"></span>
+      <span class="ri-type">Q${i+1}. ${q.type}</span>
+      <span class="ri-result ${isOk?'ok':'no'}">${isOk?'CORRECT':'WRONG → '+q.opts[q.ans]}</span>
+    </div>`;
+  }).join('');
+  document.getElementById('main').innerHTML=`
+    <div class="result-card">
+      <div class="score-ring">
+        <svg viewBox="0 0 120 120">
+          <circle cx="60" cy="60" r="${r}" fill="none" stroke="#e8eaf0" stroke-width="8"/>
+          <circle cx="60" cy="60" r="${r}" fill="none" stroke="${grade[1]}" stroke-width="8"
+            stroke-dasharray="${dash.toFixed(1)} ${circ.toFixed(1)}" stroke-linecap="round"/>
+        </svg>
+        <div class="score-ring-text">
+          <div class="score-big">${ok}</div>
+          <div class="score-denom">/ ${Q.length}</div>
+        </div>
+      </div>
+      <div class="grade-text" style="color:${grade[1]}">${grade[0]}</div>
+      <div class="grade-sub">${p}점 달성</div>
+      <div class="meta-grid">
+        <div class="meta-cell"><div class="meta-val" style="color:#16a34a">${ok}</div><div class="meta-lbl">정답</div></div>
+        <div class="meta-cell"><div class="meta-val" style="color:#dc2626">${Q.length-ok}</div><div class="meta-lbl">오답</div></div>
+        <div class="meta-cell"><div class="meta-val">${p}%</div><div class="meta-lbl">정답률</div></div>
+      </div>
+      <div class="review-section">
+        <div class="review-title">문항별 결과</div>${review}
+      </div>
+    </div>
+    <div class="nav" style="margin-top:1rem">
+      <button class="btn btn-primary" onclick="restart()">다시 풀기 ↺</button>
+    </div>`;
+}
+function restart(){cur=0;answers=Array(Q.length).fill(null);revealed=Array(Q.length).fill(false);render();}
+render();
+</script>
+</body>
+</html>
